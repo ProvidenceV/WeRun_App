@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeRun_App.Client\WeRun_App.Client.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+	  <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.7.1" />
+	  <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.6.0" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utilities\Constants\" />
+  </ItemGroup>
+</Project>
