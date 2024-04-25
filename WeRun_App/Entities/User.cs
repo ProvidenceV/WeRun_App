@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WeRun_App.Models;
 
 namespace WeRun_App.Entities
 {
@@ -18,6 +19,10 @@ namespace WeRun_App.Entities
         public ICollection<Goal> Goals { get; set; } = new List<Goal>();
         public ICollection<Route> Routes { get; set; } = new List<Route>();
         public ICollection<RunHistory> RunHistory { get; set; } = new List<RunHistory>();
+
+        //authentication
+
+        public virtual ApplicationUser user { get; set; }
 
     }
 

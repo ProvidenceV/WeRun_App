@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WeRun_App.Entities;
+using WeRun_App.Models;
 using Route = WeRun_App.Entities.Route;
 
 namespace WeRun_App.Database
@@ -57,6 +58,11 @@ namespace WeRun_App.Database
             //    .HasMany(u => u.RunLog)
             //    .WithOne(l => l.RunLog)
             //    .HasForeignKey(l => l.UserId);
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOne(a => a.user)
+                .WithOne(b => b.user)
+                .HasForeignKey<User>(b => b.Id);
+        
 
             base.OnModelCreating(modelBuilder);
         }

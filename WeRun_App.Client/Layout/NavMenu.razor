@@ -5,16 +5,19 @@
     <nav class="sitenav" aria-labelledby="main-menu" onclick="document.getElementById('navmenu-toggle').click();">
         <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded">
             <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
-            <FluentNavLink Href="counter" Icon="@(new Icons.Regular.Size20.NumberSymbolSquare())" IconColor="Color.Accent">Counter</FluentNavLink>
-            <FluentNavLink Href="weather" Icon="@(new Icons.Regular.Size20.WeatherPartlyCloudyDay())" IconColor="Color.Accent">Weather</FluentNavLink>
-            <FluentNavLink Href="home">Home</FluentNavLink>
-            <FluentNavLink Href="runlog">Run</FluentNavLink>
-            <FluentNavLink Href="goals">Your Goals</FluentNavLink>
-            <FluentNavLink Href="runhistory">History</FluentNavLink>
-            <FluentNavLink Href="useraccountinfo">Account Info</FluentNavLink>
+            <FluentNavLink Href="home" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
+            <FluentNavLink Href="runlog" Icon="@(new Icons.Regular.Size20.EditPerson())" IconColor="Color.Accent">Run</FluentNavLink>
+            <FluentNavLink Href="goals" Icon="@(new Icons.Regular.Size20.CheckboxPerson())" IconColor="Color.Accent">Your Goals</FluentNavLink>
+            <FluentNavLink Href="runhistory" Icon="@(new Icons.Regular.Size20.AppsList())" IconColor="Color.Accent">History</FluentNavLink>
+            <FluentNavLink Href="useraccountinfo" Icon="@(new Icons.Regular.Size20.Person())" IconColor="Color.Accent">Account Info</FluentNavLink>
         </FluentNavMenu>
     </nav>
 </div>
+<div class="top-row px-4 auth">
+            @* <LoginDisplay /> *@
+            @* <a href="authentication/profile" class="mr-2 text-dark">Hello @context.User.Identity?.Name!</a> *@
+            @* <a href="authentication/logout" class="nav-link btn btn-link">Log out</a> *@
+        </div>
 
 @code {
     private bool expanded = true;
