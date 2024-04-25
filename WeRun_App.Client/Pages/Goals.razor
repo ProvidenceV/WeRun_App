@@ -1,8 +1,58 @@
 ﻿@page "/goals"
 
 
-<h3>Goals</h3>
+
+<PageTitle>Goals</PageTitle>
+
+<h1>Your Goals</h1>
+<FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
+
+    <p>
+        <h3>Your weekly goal.</h3>
+
+        <FluentNumberField @bind-Value="Dist" Label="Distance in miles" />
+        <FluentNumberField @bind-Value="Time" Label="Run Time in hours" />
+        <br />
+        Your goal pace is @Pace miles per hour.
+        <br />
+    </p>
+    
+</FluentStack>
+
+<FluentDivider Style="width: 50%;" Role="DividerRole.Presentation"></FluentDivider>
+
+<h1>Your progress</h1>
+
+
+<FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
+
+    
+    <p>You ran @Dist miles this week</p>
+    <FluentStack>
+        <FluentProgressRing Min="0" Max="100" Value="20" style="width: 82px; height: 82px;" Color="Green"></FluentProgressRing>
+
+    </FluentStack>
+    <br />
+
+    <p>You ran @Time hours this week</p>
+   
+        <FluentStack>
+            <FluentProgressRing Min="0" Max="100" Value="20" style="width: 82px; height: 82px;"></FluentProgressRing>
+
+        </FluentStack>
+    
+   
+</FluentStack>
+
+
+
+
+
 
 @code {
+    private double Dist { get; set; }
+    private double Time { get; set; }
+    private double Pace => Dist / Time;
 
+}
 }
