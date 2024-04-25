@@ -1,6 +1,6 @@
 ﻿@page "/signup"
 
-@inject IDContextFactory<AppDBContext> DbContextFactory
+@* @inject IDContextFactory<AppDBContext> DbContextFactory *@
 
 
 <PageTitle>Sign Up</PageTitle>
@@ -32,14 +32,14 @@
 
 
 @code {
-     private User user = new User();
+    //  private User user = new User();
 
-    private async Task Register()
-    {
-        using var context = DbContextFactory.CreateDbContext();
+    // private async Task Register()
+    // {
+    //     using var context = DbContextFactory.CreateDbContext();
 
-        context.Users.Add(user);
-        await context.SaveChangesAsync();
+    //     context.Users.Add(user);
+    //     await context.SaveChangesAsync();
         // Redirect to login
         // NavigationManager.NavigateTo("/login");
     }

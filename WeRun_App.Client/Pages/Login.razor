@@ -2,7 +2,6 @@
 @using Microsoft.AspNetCore.Components
 @using Microsoft.EntityFrameworkCore;
 @using WeRun_App;
-@inject IDbContextFactory<AppDbContext> DbContextFactory;
 @inject NavigationManager NavigationManager;
 
 <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
@@ -17,22 +16,22 @@
 
 
 @code {
-    private LoginModel loginModel = new LoginModel();
-    private string? errorMessage;
+    // private LoginModel loginModel = new LoginModel();
+    // private string? errorMessage;
 
-    private async Task HandleLogin()
-    {
-        using var context = DbContextFactory.CreateDbContext();
-        var user = await context.Users
-                    .FirstOrDefaultAsync(u => u.Username == loginModel.Username &&
-                                              u.Password == loginModel.Password); // Consider hashing
-        if (user != null)
-        {
-            NavigationManager.NavigateTo("/HomeLogin");
-        }
-        else
-        {
-            errorMessage = "Invalid username or password";
-        }
-    }
+    // private async Task HandleLogin()
+    // {
+    //     using var context = DbContextFactory.CreateDbContext();
+    //     var user = await context.Users
+    //                 .FirstOrDefaultAsync(u => u.Username == loginModel.Username &&
+    //                                           u.Password == loginModel.Password); // Consider hashing
+    //     if (user != null)
+    //     {
+    //         NavigationManager.NavigateTo("/HomeLogin");
+    //     }
+    //     else
+    //     {
+    //         errorMessage = "Invalid username or password";
+    //     }
+    // }
 }
