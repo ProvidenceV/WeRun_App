@@ -1,10 +1,36 @@
 ﻿@page "/home"
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>WeRunApp</PageTitle>
 
-<h1>Hello, User!</h1>
+@if (!string.IsNullOrEmpty(firstName))
+{
+    <div>
+        <h1>Hello, @firstName!
+        </h1>
+    </div>
+}
+else
+{
+    <div>You are not logged in.</div>
+}
 <NavLink href="Identity/Account/RunLog">Start a Run</NavLink>
 <NavLink href="Identity/Account/RunHistory">See your Run History</NavLink>
 <NavLink href="Identity/Account/Goals">See your Goals</NavLink>
 <NavLink href="Identity/Account/UserAccountInfo">User Account</NavLink>
 <NavLink href="Identity/Account/SignOut">Sign Out</NavLink>
+
+@code {
+    private string firstName = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            firstName = user.FindFirst(ClaimTypes.GivenName)?.Value;
+        }
+    }
+}

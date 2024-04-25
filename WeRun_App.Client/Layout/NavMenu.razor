@@ -1,7 +1,13 @@
-﻿
-<div class="navmenu">
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div class="navmenu"> 
     <input type="checkbox" title="Menu expand/collapse toggle" id="navmenu-toggle" class="navmenu-icon" />
     <label for="navmenu-toggle" class="navmenu-icon"><FluentIcon Value="@(new Icons.Regular.Size20.Navigation())" Color="Color.Fill" /></label>
+    <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded">
+        <FluentNavLink Href="start">Start</FluentNavLink> 
+    </FluentNavMenu>
+    @if (isAuthenticated)
+    {
     <nav class="sitenav" aria-labelledby="main-menu" onclick="document.getElementById('navmenu-toggle').click();">
         <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded">
             <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
@@ -12,14 +18,22 @@
             <FluentNavLink Href="useraccountinfo" Icon="@(new Icons.Regular.Size20.Person())" IconColor="Color.Accent">Account Info</FluentNavLink>
         </FluentNavMenu>
     </nav>
+    }
 </div>
 <div class="top-row px-4 auth">
             @* <LoginDisplay /> *@
             @* <a href="authentication/profile" class="mr-2 text-dark">Hello @context.User.Identity?.Name!</a> *@
-            @* <a href="authentication/logout" class="nav-link btn btn-link">Log out</a> *@
+            <a href="authentication/logout" class="nav-link btn btn-link">Log out</a>
         </div>
 
 @code {
     private bool expanded = true;
 
+    private bool isAuthenticated = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        isAuthenticated = authState.User.Identity.IsAuthenticated;
+    }
 }

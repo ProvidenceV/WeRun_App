@@ -16,14 +16,13 @@ namespace WeRun_App.Client.Services
 
         public async Task<bool> RegisterUser(User user)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/users/register", user);
+            var response = await _httpClient.PostAsJsonAsync("api/users/signup", user);
             if (response.IsSuccessStatusCode)
             {
                 return true;
             }
             else
             {
-                // Optionally handle errors or log them
                 var errorMessage = await response.Content.ReadAsStringAsync();
                 throw new ApplicationException($"Failed to register: {errorMessage}");
             }

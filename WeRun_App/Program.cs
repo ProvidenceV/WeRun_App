@@ -14,6 +14,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using WeRun_App.Models;
 using Microsoft.AspNetCore.Builder;
+using WeRun_App.Interfaces;
+using WeRun_App.Client.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,24 +59,15 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Add Identity services and configure options
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<AppDBContext>();
-
-
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-// builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 builder.Services.AddFluentUIComponents();
-
-builder.Services.AddScoped<UserService>(); // Register UserService for dependency injection
-
-
+builder.Services.AddScoped<ISignUpService, SignUpService>(); // for dependency injection
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -100,6 +93,7 @@ app.UseRouting();
 app.UseAntiforgery();
 
 
+
 app.MapControllers();
 app.MapBlazorHub();
 
@@ -107,6 +101,5 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(WeRun_App.Client._Imports).Assembly);
-
 
 app.Run();
