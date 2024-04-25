@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WeRun_App.Utilities;
 
 
@@ -7,7 +8,8 @@ namespace WeRun_App.Entities
     [Table("RunHistory")]
     public class RunHistory
     {
-        public int? HistoryId { get; set; }
+        public uint HistoryId { get; set; }
+        public uint UserId { get; set; }
         public int? TotalRuns { get; set; }
         public double? TotalDistance { get; set; } //distance in meters, can convert with constants
         public int? TotalCalories { get; set; }
@@ -27,8 +29,6 @@ namespace WeRun_App.Entities
 
         //relationship
         public User User { get; set; }
-        public uint UserId { get; set; }
-
         public Route Route { get; set; }
         public uint RouteId { get; set; }
 

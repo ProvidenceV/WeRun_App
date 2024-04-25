@@ -1,14 +1,25 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.FluentUI.AspNetCore.Components;
 using WeRun_App.Client.Pages;
 using WeRun_App.Components;
+using WeRun_App.Database;
+using WeRun_App.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//add database
+builder.Services.AddDbContext<AppDBContext>(options =>
+    options.UseSqlite("Data Source=WeRunApp.db"));
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 builder.Services.AddFluentUIComponents();
+
+builder.Services.AddScoped<UserService>(); // Register UserService for dependency injection
+
 
 var app = builder.Build();
 
@@ -33,5 +44,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(WeRun_App.Client._Imports).Assembly);
+
 
 app.Run();

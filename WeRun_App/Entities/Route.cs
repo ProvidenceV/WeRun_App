@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WeRun_App.Utilities;
 
 namespace WeRun_App.Entities
@@ -7,6 +8,7 @@ namespace WeRun_App.Entities
     public class Route
     {
         public uint RouteId { get; set; }
+        public uint UserId { get; set; }
         public string? RouteName { get; set; }
         public string? StartPoint { get; set; }
         public string? EndPoint { get; set; }
@@ -25,6 +27,5 @@ namespace WeRun_App.Entities
         }
         // relationship
         public User User { get; set; }
-        public int UserId { get; set; }
     }
 }

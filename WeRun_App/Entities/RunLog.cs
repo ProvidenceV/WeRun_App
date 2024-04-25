@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WeRun_App.Utilities;
 
 namespace WeRun_App.Entities
@@ -6,7 +7,8 @@ namespace WeRun_App.Entities
     [Table("RunLogs")]
     public class RunLog
     {
-        public int RunId { get; set; }
+        public uint RunId { get; set; }
+        public uint UserId { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public TimeSpan? Duration { get; set; }
@@ -26,8 +28,6 @@ namespace WeRun_App.Entities
 
         // relationship
         public User User { get; set; }
-        public uint? UserId { get; set; }
-
         public Route Route { get; set; }
         public uint? RouteId { get; set; }
     }

@@ -1,5 +1,8 @@
 ﻿@page "/signup"
-
+@using WeRun_App.Client.Models
+@using WeRun_App.Client.Services
+@inject UserService UserService
+@inject NavigationManager NavigationManager
 @* @inject IDContextFactory<AppDBContext> DbContextFactory *@
 
 
@@ -32,6 +35,23 @@
 
 
 @code {
+   
+    
+    private User user = new User();
+
+    private async Task Register()
+    {
+        if (user.IsValid()) // Assuming you have a validation method
+        {
+            await UserService.RegisterUser(user); // Hypothetical async service call
+            NavigationManager.NavigateTo("/successpage"); // Redirect on success
+        }
+        else
+        {
+            // Handle validation failure
+            Console.WriteLine("Validation failed");
+        }
+    }
     //  private User user = new User();
 
     // private async Task Register()

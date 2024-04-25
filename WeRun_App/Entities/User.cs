@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WeRun_App.Entities
 {
     [Table("Users")]
     public class User
     {
-        uint Id { get; set; }
-        public string UserName { get; set; }
+        public uint Id { get; set; }
+        public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string? FirstName { get; set; }

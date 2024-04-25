@@ -19,16 +19,21 @@ namespace WeRun_App.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>();
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.Id);
 
-            modelBuilder.Entity<Goal>();
+            modelBuilder.Entity<Goal>()
+                .HasKey(g => g.GoalId);
 
-            modelBuilder.Entity<RunHistory>();
+            modelBuilder.Entity<RunHistory>()
+                .HasKey(h => h.HistoryId);
 
-            modelBuilder.Entity<RunLog>();
+            modelBuilder.Entity<RunLog>()
+                .HasKey(l => l.RunId); ;
 
-            modelBuilder.Entity<Route>();
-
+            modelBuilder.Entity<Route>()
+                .HasKey(r=>r.RouteId);
+            
             // One-to-Many: User to Goals
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Goals)
@@ -38,8 +43,8 @@ namespace WeRun_App.Database
             // One-to-Many: User to Goals
             modelBuilder.Entity<User>()
                 .HasMany(u => u.RunHistory)
-                .WithOne(rh => rh.User)
-                .HasForeignKey(rh => rh.UserId);
+                .WithOne(h => h.User)
+                .HasForeignKey(h => h.UserId);
 
             // One-to-Many: User to Routes
             modelBuilder.Entity<User>()
@@ -47,13 +52,17 @@ namespace WeRun_App.Database
                 .WithOne(r => r.User)
                 .HasForeignKey(r => r.UserId);
 
+            //// One-to-Many: User to RunLogs
+            //modelBuilder.Entity<User>()
+            //    .HasMany(u => u.RunLog)
+            //    .WithOne(l => l.RunLog)
+            //    .HasForeignKey(l => l.UserId);
+
             base.OnModelCreating(modelBuilder);
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=WeRunApp.db");
+        }
     }
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //      {
-    //          optionsBuilder.UseSqlite("Data Source=WeRunApp.db");
-    //      }
-
-
 }

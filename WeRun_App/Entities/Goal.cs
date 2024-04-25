@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WeRun_App.Entities
 {
     [Table("Goals")]
     public class Goal
     {
-        public int GoalId { get; set; }
+        public uint GoalId { get; set; }
         public string? GoalType { get; set; }
         public double? GoalValue { get; set; }
         public DateTime? StartDate { get; set; }
@@ -14,7 +15,7 @@ namespace WeRun_App.Entities
 
         // relationship
         public User User { get; set; }
-        public int UserId { get; set; }
+        public uint UserId { get; set; }
 
     }
 }
