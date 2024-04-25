@@ -1,0 +1,30 @@
+﻿@page "/useraccountinfo"
+
+<PageTitle>User Account Info</PageTitle>
+
+<h1>User Account Info</h1>
+
+<div>
+    
+</div>
+
+<FluentButton Appearance="Appearance.Accent" @onclick="Edit">Edit Info</FluentButton>
+<FluentButton Appearance="Appearance.Neutral" @onclick="SaveChanges">Save</FluentButton>
+
+    @code {
+    private int currentCount = 0;
+
+    private void Edit()
+    {
+        //make fields not read only
+    }
+    private void SaveChanges()
+    {
+        //save changes and upload
+
+    }
+    private void MakeReadOnly()
+    {
+        //make fields read only again
+    }
+}

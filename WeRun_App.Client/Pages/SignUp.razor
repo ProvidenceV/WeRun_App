@@ -1,0 +1,46 @@
+﻿@page "/signup"
+
+@inject IDContextFactory<AppDBContext> DbContextFactory
+
+
+<PageTitle>Sign Up</PageTitle>
+
+<h1>Sign Up</h1>
+
+<div>
+    <EditForm Model="@user" OnValidSubmit="Register">
+        Enter your information below:
+
+        Username:  <InputText @bind-Value="user.Username" />
+
+        First Name:  <InputText @bind-Value="user.FirstName" />
+
+        Last Name:  <InputText @bind-Value="user.LastName" />
+
+        Email Address: <InputText @bind-Value="user.Email" />
+
+        New Password: <InputText @bind-Value="user.Password" />
+
+        Gender: <InputText @bind-Value="user.Gender" />
+
+        Date Of Birth:  <InputText @bind-Value="user.DateOfBirth" />
+
+
+        <button type="submit">Register</button>
+    </EditForm>
+</div>
+
+
+@code {
+     private User user = new User();
+
+    private async Task Register()
+    {
+        using var context = DbContextFactory.CreateDbContext();
+
+        context.Users.Add(user);
+        await context.SaveChangesAsync();
+        // Redirect to login
+        // NavigationManager.NavigateTo("/login");
+    }
+}
