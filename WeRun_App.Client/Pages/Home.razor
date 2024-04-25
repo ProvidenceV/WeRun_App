@@ -1,13 +1,10 @@
-﻿@page "/"
+﻿@page "/home"
 
 <PageTitle>WeRunApp</PageTitle>
 
-<div>
-
-
-    <h1>Hello, Please Log in or Sign Up!</h1>
-</div>
-<div>
-    <NavLink href="Identity/Account/Login">Log in</NavLink>
-    <NavLink href="Identity/Account/SignUp">Sign Up</NavLink>
-</div>
+<h1>Hello, User!</h1>
+<NavLink href="Identity/Account/RunLog">Start a Run</NavLink>
+<NavLink href="Identity/Account/RunHistory">See your Run History</NavLink>
+<NavLink href="Identity/Account/Goals">See your Goals</NavLink>
+<NavLink href="Identity/Account/UserAccountInfo">User Account</NavLink>
+<NavLink href="Identity/Account/SignOut">Sign Out</NavLink>

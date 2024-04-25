@@ -175,3 +175,30 @@ code {
         border: none;
     }
 }
+body {
+}
+
+.tabs button {
+    background-color: #f1f1f1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+    .tabs button:hover {
+        background-color: #ddd;
+    }
+
+.tabs .active {
+    background-color: #ccc;
+}
+
+.tabcontent {
+    display: block; /* Display block to show the tab content */
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}

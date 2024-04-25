@@ -1,0 +1,142 @@
+﻿@page "/"
+@using System.Text.RegularExpressions
+
+<PageTitle>WeRunApp</PageTitle>
+
+<div>
+    <h1>Welcome to the WeRun Application</h1>
+    <br />
+    <h3>This app allows users to monitor real-time metrics like pace, distance, and time during their runs. It logs each session in a detailed history for performance review and progress tracking. Additionally, it offers a route planner for discovering and saving favorite paths, and a goal-setting feature to help users achieve their fitness objectives</h3>
+
+    <h2>Hello, Please Log in or Sign Up!</h2>
+
+</div>
+<div class="tabs">
+    <button @onclick="@(() => ShowTab("login"))" class="@GetActiveClass("login")">Login</button>
+    <button @onclick="@(() => ShowTab("register"))" class="@GetActiveClass("register")">Register</button>
+</div>
+
+<div>
+    @if (currentTab == "login")
+    {
+        <div>
+            <h3>Login</h3>
+            <EditForm Model="loginModel" OnValidSubmit="LogIn" OnInvalidSubmit="ShowErrorMessage">
+                Username or Email: <InputText @bind-Value="loginModel.UsernameOrEmail" placeholder="Username or Email" />
+                Password: <InputText type="password" @bind-Value="loginModel.Password" placeholder="Password" />
+                <button type="submit">Login</button>
+            </EditForm>
+        </div>
+    }
+    else if (currentTab == "register")
+    {
+        <div>
+            <h3>Sign Up</h3>
+            <EditForm Model="@signUpModel" OnValidSubmit="Register" OnInvalidSubmit="ShowErrorMessage">
+                Enter your information below:
+
+                Username:  <InputText @bind-Value="signUpModel.Username" placeholder="Username" />
+
+                First Name:  <InputText @bind-Value="signUpModel.FirstName" placeholder="First Name" />
+
+                Last Name:  <InputText @bind-Value="signUpModel.LastName" placeholder="Last Name" />
+
+                Email Address: <InputText @bind-Value="signUpModel.Email" placeholder="Email" type="email" />
+
+                New Password: <InputText @bind-Value="signUpModel.Password" placeholder="Password" type="password"/>
+
+                Gender: <InputText @bind-Value="signUpModel.Gender" />
+
+                Date Of Birth:  <InputText @bind-Value="signUpModel.DateOfBirth" />
+
+
+                <button type="submit">Register</button>
+            </EditForm>
+        </div>
+    }
+</div>
+
+@code {
+    
+    //tab functionality
+    private string currentTab = "login";
+    private string errorMessage = string.Empty;
+
+    private void ShowTab(string tabName)
+    {
+        currentTab = tabName;
+    }
+
+    private string GetActiveClass(string tabName)
+    {
+        return currentTab == tabName ? "active" : "";
+    }
+
+    //error message
+    private void ShowErrorMessage()
+    {
+        errorMessage = "Please correct the errors in the form.";
+    }
+    // login and register models
+
+    public class LoginModel
+    {
+        public string UsernameOrEmail { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class SignUpModel
+    {
+        public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string? Gender { get; set; }
+        public string? DateOfBirth { get; set; }
+    }
+
+    private LoginModel loginModel = new();
+    private SignUpModel signUpModel = new();
+
+
+    private async Task Register()
+    {
+        if (IsValidEmail(signUpModel.Email))
+        {
+
+        }
+        else
+        {
+            
+        }
+
+    }
+
+    private async Task LogIn()
+    {
+        
+        // Check if the input is an email
+        if (IsValidEmail(loginModel.UsernameOrEmail))
+        {
+            // Authenticate using email
+            //var result = await AuthService.LoginWithEmailAsync(loginModel.UsernameOrEmail, loginModel.Password);
+            // Handle result
+        }
+        else
+        {
+            // Authenticate using username
+            //var result = await AuthService.LoginWithUsernameAsync(loginModel.UsernameOrEmail, loginModel.Password);
+            // Handle result
+        }
+    }
+
+    private bool IsValidEmail(string email)
+    {
+        // Regex for email
+        string pattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+        Regex regex = new Regex(pattern);
+        return regex.IsMatch(email);
+    }
+}
+
