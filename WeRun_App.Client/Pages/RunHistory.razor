@@ -1,7 +1,50 @@
 ﻿@page "/runhistory"
 
-<PageTitle>Run History</PageTitle>
+<PageTitle>Run Histor</PageTitle>
+<h3>RunHistory</h3>
+
+<p>
+
+<FluentDataGrid Items="@runs">
+    
+    <PropertyColumn Property="@(p => p.Distance)" Sortable="true" />
+    <PropertyColumn Property="@(p => p.Time)" Sortable="true" />
+    <PropertyColumn Property="@(p => p.Pace)" Sortable="true" />
+    
+</FluentDataGrid>
+
+<br>
+ <br />
+
+
+<h3>Add a new run.</h3>
+
+<FluentNumberField @bind-Value="Distance" Label="Distance in miles" />
+<FluentNumberField @bind-Value="Time" Label="Run Time in hours" />
+<p>Your pace is @Pace miles per hour.</p>
+<FluentButton>Add Run</FluentButton>
+
+</p>
+
 
 @code {
+    public double Distance;
+    public double Time;
+    public double Pace;
+
+    record Runs(double Distance, double Time, double Pace);
   
+
+    IQueryable<Runs> runs = new[]
+    {
+        new Runs(3 , 2, 1.5),
+        new Runs(4.2, 2.1, 2),
+        new Runs( 6.3, 4, 1.58),
+        new Runs( 5, 4, 1.25),
+        new Runs( 10, 5, 2)
+
+    }.AsQueryable();
+
+   
+ 
 }
