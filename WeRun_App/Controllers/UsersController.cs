@@ -57,15 +57,15 @@ namespace WeRun_App.Controllers
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Username,Email,Password,FirstName,LastName,DateOfBirth,Gender")] Entities.User user)
+        public async Task<IActionResult> Create([Bind("Username,Email,Password,FirstName,LastName,DateOfBirth,Gender")] Entities.User newUser)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _signUpService.RegisterUserAsync(user);
+                    await _signUpService.RegisterUserAsync(newUser);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -74,7 +74,7 @@ namespace WeRun_App.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
             }
-            return View(user);
+            return View(newUser);
         }
 
 
@@ -129,22 +129,36 @@ namespace WeRun_App.Controllers
             }
             return View(user);
         }
-        [HttpPost("signup")]
-        public async Task<IActionResult> RegisterUser([FromBody] Entities.User user)
+        [HttpPost("api/users/signup")]
+        public async Task<IActionResult> RegisterUser([FromBody] SignUpModel signUpModel)
         {
             if (ModelState.IsValid)
             {
-                if (_context.Users.Any(u => u.Email == user.Email))
+                if (_context.Users.Any(u => u.Email == signUpModel.Email))
                 {
                     return BadRequest("User already exists.");
                 }
 
+                var user = new Entities.User
+                {
+                    Username = signUpModel.Username,
+                    FirstName = signUpModel.FirstName,
+                    LastName = signUpModel.LastName,
+                    Email = signUpModel.Email,
+                    Password = signUpModel.Password,
+                    Gender = signUpModel.Gender,
+                    DateOfBirth = signUpModel.DateOfBirth
+                };
+
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
+
                 return Ok();
             }
+
             return BadRequest(ModelState);
         }
+    
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(uint? id)
         {
@@ -185,5 +199,4 @@ namespace WeRun_App.Controllers
 
         
         }
-    }
-
+}

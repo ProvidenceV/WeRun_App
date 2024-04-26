@@ -16,6 +16,8 @@ using WeRun_App.Models;
 using Microsoft.AspNetCore.Builder;
 using WeRun_App.Interfaces;
 using WeRun_App.Client.Services;
+using WeRun_App.Client.Models;
+using WeRun_App.Client.Pages;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -67,6 +69,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 builder.Services.AddFluentUIComponents();
+
+
 builder.Services.AddScoped<ISignUpService, SignUpService>(); // for dependency injection
 var app = builder.Build();
 
@@ -91,8 +95,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAntiforgery();
-
-
 
 app.MapControllers();
 app.MapBlazorHub();
