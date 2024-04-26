@@ -65,7 +65,61 @@ namespace WeRun_App.Database
         
 
             base.OnModelCreating(modelBuilder);
-        }
+
+            //seeded table
+            
+            modelBuilder.Entity<User>()
+                .HasData( 
+                    new User
+                    {
+                        Id = 1,
+                        Username = "agrisby",
+                        Email = "grisbyar@mail.uc.com",
+                        Password = "pass123",
+                        FirstName = "Alexander",
+                        LastName = "Grisby",
+                        JoinDate = DateTime.Now,
+                        DateOfBirth = "03/10/1996",
+                        Gender = "Male",
+                    },
+                    new User
+                    {
+                        Id = 2,
+                        Username = "knneely",
+                        Email = "neelykn@mail.uc.com",
+                        Password = "passcode",
+                        FirstName = "Kayla",
+                        LastName = "Neely",
+                        JoinDate = DateTime.Now,
+                        DateOfBirth = "",
+                    },
+                    new User
+                    {
+                        Id = 3,
+                        Username = "jdoe",
+                        Email = "doejohn@mail.uc.com",
+                        Password = "password",
+                        FirstName = "John",
+                        LastName = "Doe",
+                        JoinDate = DateTime.Now,
+                        DateOfBirth = "01/01/1999",
+                        Gender = "Male"
+                    },
+                    new User
+                    {
+                        Id = 4,
+                        Username = "jadoe",
+                        Email = "doejane@mail.uc.com",
+                        Password = "123",
+                        FirstName = "Jane",
+                        LastName = "Doe",
+                        JoinDate = DateTime.Now,
+                        DateOfBirth = "02/02/1998",
+                        Gender = "Female"
+                    }
+                );
+        
+    }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=WeRunApp.db");
