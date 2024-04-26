@@ -14,7 +14,7 @@ namespace WeRun_App.Entities
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime JoinDate { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public string? DateOfBirth { get; set; }
         public string? Gender { get; set; }
         public ICollection<Goal> Goals { get; set; } = new List<Goal>();
         public ICollection<Route> Routes { get; set; } = new List<Route>();
@@ -24,6 +24,7 @@ namespace WeRun_App.Entities
 
         public virtual ApplicationUser user { get; set; }
 
+       
     }
 
 }

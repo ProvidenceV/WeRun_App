@@ -1,19 +1,18 @@
-﻿namespace WeRun_App.Client.Models
-{
+﻿
+
+
+namespace WeRun_App.Client.Models;
+
     public class User
     {
-        public string? Username;
-        public string? FirstName;
-        public string? LastName;
-        public string? Password;
-        public string? Email;
-        public string? Gender;
-        public string? DateOfBirth;
+        public uint Id { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? DateOfBirth { get; set; }
+        public string? Gender { get; set; }
 
-        public bool IsValid()
-        {
-            return true;
-        }
     }
-    
-}
+

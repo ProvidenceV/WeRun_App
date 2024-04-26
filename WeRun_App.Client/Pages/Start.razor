@@ -1,5 +1,8 @@
 ﻿@page "/"
-@using System.Text.RegularExpressions
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+@using WeRun_App.Client.Models
+
 
 <PageTitle>WeRunApp</PageTitle>
 
@@ -57,7 +60,7 @@
 </div>
 
 @code {
-    
+
     //tab functionality
     private string currentTab = "login";
     private string errorMessage = string.Empty;
@@ -77,38 +80,27 @@
     {
         errorMessage = "Please correct the errors in the form.";
     }
-    // login and register models
-
-    public class LoginModel
-    {
-        public string UsernameOrEmail { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class SignUpModel
-    {
-        public string Username { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string? Gender { get; set; }
-        public string? DateOfBirth { get; set; }
-    }
 
     private LoginModel loginModel = new();
     private SignUpModel signUpModel = new();
-
 
     private async Task Register()
     {
         if (IsValidEmail(signUpModel.Email))
         {
-
+            try
+            {
+                await UserService.RegisterUser(signUpModel);
+                NavigationManager.NavigateTo("/home");
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error occurred during registration: {ex.Message}");
+            }
         }
         else
         {
-            
+            Console.Error.WriteLine("Invalid email address.");
         }
 
     }
@@ -116,20 +108,20 @@
     private async Task LogIn()
     {
         
-        // Check if the input is an email
-        if (IsValidEmail(loginModel.UsernameOrEmail))
-        {
-            // Authenticate using email
-            //var result = await AuthService.LoginWithEmailAsync(loginModel.UsernameOrEmail, loginModel.Password);
-            // Handle result
-        }
-        else
-        {
-            // Authenticate using username
-            //var result = await AuthService.LoginWithUsernameAsync(loginModel.UsernameOrEmail, loginModel.Password);
-            // Handle result
-        }
-    }
+        // //Check if the input is an email
+        // if (IsValidEmail(loginModel.UsernameOrEmail))
+        // {
+        //    // Authenticate using email
+        //     var result = await AuthService.LoginWithEmailAsync(loginModel.UsernameOrEmail, loginModel.Password);
+        //     //Handle result
+        // }
+        // else
+        // {
+        //    // Authenticate using username
+        //     var result = await AuthService.LoginWithUsernameAsync(loginModel.UsernameOrEmail, loginModel.Password);
+        //     //Handle result
+        //}
+   }
 
     private bool IsValidEmail(string email)
     {

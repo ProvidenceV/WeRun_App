@@ -5,18 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WeRun_App.Client.Models;
 using WeRun_App.Database;
 using WeRun_App.Entities;
+using WeRun_App.Interfaces;
 
 namespace WeRun_App.Controllers
 {
     public class UsersController : Controller
     {
         private readonly AppDBContext _context;
+        private readonly ISignUpService _signUpService;
 
-        public UsersController(AppDBContext context)
+
+        public UsersController(AppDBContext context, ISignUpService signUpService)
         {
             _context = context;
+            _signUpService = signUpService;
         }
 
         // GET: Users
@@ -52,18 +57,27 @@ namespace WeRun_App.Controllers
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,Email,Password,FirstName,LastName,JoinDate,DateOfBirth,Gender")] User user)
+        public async Task<IActionResult> Create([Bind("Username,Email,Password,FirstName,LastName,DateOfBirth,Gender")] Entities.User newUser)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _signUpService.RegisterUserAsync(newUser);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    // Handle registration error
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
             }
-            return View(user);
+            return View(newUser);
         }
+
+
 
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(uint? id)
@@ -86,7 +100,7 @@ namespace WeRun_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("Id,Username,Email,Password,FirstName,LastName,JoinDate,DateOfBirth,Gender")] User user)
+        public async Task<IActionResult> Edit(uint id, [Bind("Id,Username,Email,Password,FirstName,LastName,JoinDate,DateOfBirth,Gender")] Entities.User user)
         {
             if (id != user.Id)
             {
@@ -115,7 +129,36 @@ namespace WeRun_App.Controllers
             }
             return View(user);
         }
+        [HttpPost("api/users/signup")]
+        public async Task<IActionResult> RegisterUser([FromBody] SignUpModel signUpModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_context.Users.Any(u => u.Email == signUpModel.Email))
+                {
+                    return BadRequest("User already exists.");
+                }
 
+                var user = new Entities.User
+                {
+                    Username = signUpModel.Username,
+                    FirstName = signUpModel.FirstName,
+                    LastName = signUpModel.LastName,
+                    Email = signUpModel.Email,
+                    Password = signUpModel.Password,
+                    Gender = signUpModel.Gender,
+                    DateOfBirth = signUpModel.DateOfBirth
+                };
+
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+
+            return BadRequest(ModelState);
+        }
+    
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(uint? id)
         {
@@ -153,5 +196,7 @@ namespace WeRun_App.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
-    }
+
+        
+        }
 }
